@@ -9,7 +9,7 @@
         @if(explode('/',Route::current()->uri)[0] == 'search-draft')
         Draftbox
         @elseif(explode('/',Route::current()->uri)[0] == 'search-mail')
-        Mailbox
+        Inbox
         @else
         Sentbox
         @endif
@@ -19,7 +19,7 @@
         @if(explode('/',Route::current()->uri)[0] == 'search-draft')
         <li class="active">Draftbox</li>
         @elseif(explode('/',Route::current()->uri)[0] == 'search-mail')
-        <li class="active">Mailbox</li>
+        <li class="active">Inbox</li>
         @else
         <li class="active">Sentbox</li>
         @endif
@@ -38,7 +38,7 @@
               @if(explode('/',Route::current()->uri)[0] == 'search-draft')
               Draftbox
               @elseif(explode('/',Route::current()->uri)[0] == 'search-mail')
-              Mailbox
+              Inbox
               @else
               Sentbox
               @endif

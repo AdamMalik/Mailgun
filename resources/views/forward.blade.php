@@ -46,13 +46,13 @@
               </div>
               <div class="form-group">
                     <textarea id="compose-textarea" name="mail" class="form-control" style="height: 300px">
-<pre>---------Pesan terusan---------
-From : {{$pesan->from_user}}
-To : {{$pesan->to_user}}
+<pre>----------- Pesan terusan -----------
+From    : {{$pesan->from_user}}
+To      : {{$pesan->to_user}}
 Subject : {{$pesan->subject}}
-pesan : 
+pesan   : 
 </pre>
-{!! $pesan->message !!}
+<u>{!! $pesan->message !!}</u>
                     </textarea>
               </div>
             </div>

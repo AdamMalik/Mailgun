@@ -40,7 +40,7 @@
             <!-- /.box-header -->
             <div class="box-body">
             @if(explode('/',Route::current()->uri)[0] == 'read-draft')
-              <form action="/compose" method="post">
+              <form action="/compose" id="compose" method="post">
                 <div class="form-group">
                   <input class="form-control" name="to" placeholder="To:" id="to" value="{{$pesan[0]->to_user}}">
                 </div>
@@ -58,7 +58,7 @@
                 <div class="pull-right">
                   <!-- <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Draft</button> -->
                     {{csrf_field()}}
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
+                    <button type="submit" class="btn btn-primary" id="send" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending your messagae"><i class="fa fa-envelope-o"></i> Send</button>
                 </div>
                 <button type="reset" class="btn btn-default">Clear</button>
               </div>

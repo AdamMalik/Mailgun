@@ -5,11 +5,11 @@
   <!-- <div class="row"> -->
     <section class="content-header">
       <h1>
-        User
+        Users
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
-        <li class="active">User</li>
+        <li class="active">Users</li>
       </ol>
     </section>
     <section class="content">
@@ -18,7 +18,7 @@
     <!-- <div class="col-sm-12" style="margin-top:20px"> -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">User Table</h3>
+          <h3 class="box-title">Users Table</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -39,12 +39,12 @@
                 <td>{{$item->name}}</td>
                 <td>{{$item->email}}</td>
                 <td style="text-align:center">
-                  <a href="#!" data-toggle="modal" data-target="#modal-default" class="edit">
+                  <a href="#!" data-toggle="modal" title="edit" data-target="#modal-default" class="edit">
                     <span class="y" style="background-color:#3c8dbc;color:#fff;padding:5px 10px">
                       <i class="fa fa-pencil"></i>
                     </span>
                   </a>
-                  <a href="/delete/{{$item->id}}"  class="deleteuser">
+                  <a href="/delete/{{$item->id}}" title="delete"  class="deleteuser">
                     <span class="z" style="background-color:#dd4b39;color:#fff;padding:5px 10px">
                       <i class="fa fa-trash"></i>
                     </span>

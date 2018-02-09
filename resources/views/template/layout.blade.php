@@ -155,7 +155,7 @@
         </div>
         <!-- <li style="text-align:center !important"> -->
         <!-- </li> -->
-        @if(explode("/",Route::current()->uri)[0] == 'mail' || explode("/",Route::current()->uri)[0] == 'search-mail')
+        @if(explode("/",Route::current()->uri)[0] == 'mail' || explode("/",Route::current()->uri)[0] == 'search-mail' || explode("/",Route::current()->uri)[0] == 'read-mail')
           <li class="active">
         @else
           <li class="">
@@ -165,7 +165,7 @@
             <!-- <span class="label label-primary pull-right">unread 12</span> -->
           </a>
         </li>
-        @if(explode("/",Route::current()->uri)[0] == 'draft' || explode("/",Route::current()->uri)[0] == 'search-draft')
+        @if(explode("/",Route::current()->uri)[0] == 'draft' || explode("/",Route::current()->uri)[0] == 'search-draft' || explode("/",Route::current()->uri)[0] == 'read-draft')
           <li class="active">
         @else
           <li class="">
@@ -175,7 +175,7 @@
             <span>Draft</span>
           </a>
         </li>
-        @if(explode("/",Route::current()->uri)[0] == 'sent' || explode("/",Route::current()->uri)[0] == 'search-sent')
+        @if(explode("/",Route::current()->uri)[0] == 'sent' || explode("/",Route::current()->uri)[0] == 'search-sent' || explode("/",Route::current()->uri)[0] == 'read-sent')
           <li class="active">
         @else
           <li class="">

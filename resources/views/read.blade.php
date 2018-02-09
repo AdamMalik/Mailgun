@@ -8,7 +8,12 @@
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Mailbox</li>
+      @if(explode('/',Route::current()->uri)[0] == 'read-mail')
+      <li class="active">Inbox</li>
+      @else
+      <li class="active">Sentbox</li>
+      @endif
+      <li class="active">Read</li> 
     </ol>
   </section>
   <section class="content">
@@ -17,7 +22,7 @@
         <div class="col-md-12">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Read Mail</h3>
+              <!-- <h3 class="box-title">Read Mail</h3> -->
 
               <div class="box-tools pull-right">
                 <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="Previous"><i class="fa fa-chevron-left"></i></a>
@@ -28,8 +33,8 @@
             <div class="box-body no-padding">
               <div class="mailbox-read-info">
                 <h3>{{$pesan[0]->subject}}</h3>
-                <h5>From: {{$pesan[0]->from_user}}</h5>
-                <h5>To  : {{$pesan[0]->to_user}}</h5>
+                <h5>From : {{$pesan[0]->from_user}}</h5>
+                <h5>To : {{$pesan[0]->to_user}}</h5>
                   <!-- <span class="mailbox-read-time pull-right">15 Feb. 2016 11:03 PM</span></h5> -->
               </div>
               <!-- /.mailbox-read-info -->

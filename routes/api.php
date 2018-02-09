@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Api;
 // use Mailgun\Mailgun;
 /*
 |--------------------------------------------------------------------------
@@ -21,37 +22,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/message',function(Request $req){
 	// return response()->json(['status'=>'success', 'message'=>'hohohoho']);
+	$newResponse = new Api();
+	$newResponse->from = $req->from;
+	$newResponse->to = $req->to;
+	$newResponse->subject = $req->subject;
+	$newResponse->html = $req->html;
+	$newResponse->save();
 	return $req->all();
 });
 
 
 // coba coba
-Route::post('/store',function(Request $req){
-	$contents = Storage::get('file.txt');
-	Storage::put('file.txt',  json_encode($req->all())."\n". $contents );
-	$contents = Storage::get('file.txt');
-	return $contents;
+Route::post('/coba',function(Request $req){
+	return $req->all();
 });
-// Route::post('/create/{email}/{name}/{password}',function(Request $req, $email, $name, $password){
-	// return $req->all();
-// 	DB::table('users')->insert(
-// 	    ['name'=>$name, 'email' => $email, 'password' => bcrypt($password) ]
-// 	);
-// 	return 'gotcha';
-// });
-// Route::post('/send/{to_user}/{subject}/{message}',function(Request $req, $to_user, $subject, $message){
-	// return $req->all();
-	// $mgClient = new Mailgun('key-30f568b1ba8dcd818cb866c7d9860541');
-	// $domain = "mail.ingo.io";
-
-	# Make the call to the client.
-	// return $sent;
-	// $result = $mgClient->sendMessage("$domain", array(
-	//     'from'    => 'admin@ingo.com',
-	//     'to'      => $to_user,
-	//     'subject' => $subject,
-	//     'html'    => $message
-	// ));
-
-	// return json_encode($result);
-// });

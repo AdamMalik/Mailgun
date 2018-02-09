@@ -26,7 +26,6 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function(){
 	Route::get('/', 'user@index');
-	Route::get('/register','user@index');
 	Route::get('/forward/{id}','user@forward');
 	Route::get('/mail/{page}','user@getMail');
 	Route::get('/draft/{page}','user@getDraft');
@@ -39,6 +38,7 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::get('/search-draft/{cari?}/{page?}','user@search');
 	Route::get('/search-mail/{cari?}/{page?}','user@search');
 	Route::get('/delete-message/{id}','user@deleteMessage');
+	Route::get('/register','user@index');
 	Route::match(['get','post'],'/compose/{email?}','user@compose');
 	Route::post('/draft','user@postDraft');
 });

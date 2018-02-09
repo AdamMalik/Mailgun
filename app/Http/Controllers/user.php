@@ -26,6 +26,20 @@ class user extends Controller
         $idx=0;
 
         // return $cari;
+        function ambilSearch($field, $role, $syarat, $page, $field2){
+            $hasil = DB::table('messages')
+                    ->join('users', 'users.email', '=', 'messages.'.$field2)
+                    ->select('from_user','to_user','subject','role','name','read','message','messages.id')
+                    ->where([$field=>Auth::user()->email, 'role'=>$role])
+                    ->Where(function ($query) use($syarat) {
+                         for ($i = 0; $i < count($syarat)-1; $i++){
+                            $query->orwhere($syarat[$i], 'like',  '%' . $syarat[4] .'%');
+                         }
+                    })
+                    ->orderBy('messages.id','desc')
+                    ->paginate(15,['*'],'page',$page);
+            return $hasil;
+        }
 
         $per = $page > 1? ($page * 15) - 15 : 0;
         // return $cari;
@@ -35,45 +49,12 @@ class user extends Controller
         $syarat = ['name','to_user','from_user','subject',$cari];
 
         if(explode('/',Route::current()->uri)[0] == 'search-sent'){
-            $result = DB::table('messages')
-                    ->join('users', 'users.email', '=', 'messages.to_user')
-                    ->select('from_user','to_user','subject','role','name','message','messages.id')
-                    ->where(['from_user'=>Auth::user()->email, 'role'=>0])
-                    ->Where(function ($query) use($syarat) {
-                         for ($i = 0; $i < count($syarat)-1; $i++){
-                            $query->orwhere($syarat[$i], 'like',  '%' . $syarat[4] .'%');
-                         }
-                    })
-                    ->orderBy('messages.id','desc')
-                    ->paginate(15,['*'],'page',$page);
-            // return $result;
-        } else if(explode('/',Route::current()->uri)[0] == 'search-mail'){   
-            $result = DB::table('messages')
-                    ->join('users', 'users.email', '=', 'messages.from_user')
-                    ->select('from_user','to_user','subject','role','name','read','message','messages.id')
-                    ->where(['role'=>0, 'to_user'=> Auth::user()->email])
-                    ->Where(function ($query) use($syarat) {
-                         for ($i = 0; $i < count($syarat)-1; $i++){
-                            $query->orwhere($syarat[$i], 'like',  '%' . $syarat[4] .'%');
-                         }
-                    })
-                    ->orderBy('messages.id','desc')
-                    ->paginate(15,['*'],'page',$page);
+            $result = ambilSearch('from_user',0,$syarat,$page,'to_user');
+        } else if(explode('/',Route::current()->uri)[0] == 'search-mail'){
+            $result = ambilSearch('to_user',0,$syarat,$page,'from_user');   
         } else if(explode('/',Route::current()->uri)[0] == 'search-draft'){   
-            $result = DB::table('messages')
-                    ->join('users', 'users.email', '=', 'messages.from_user')
-                    ->select('from_user','to_user','subject','role','name', 'message','messages.id')
-                    ->where(['role'=>1, 'from_user'=> Auth::user()->email])
-                    ->Where(function ($query) use($syarat) {
-                         for ($i = 0; $i < count($syarat)-1; $i++){
-                            $query->orwhere($syarat[$i], 'like',  '%' . $syarat[4] .'%');
-                         }
-                    })
-                    ->orderBy('messages.id','desc')
-                    ->paginate(15,['*'],'page',$page);;
+            $result = ambilSearch('from_user',1,$syarat,$page,'to_user');
         }
-
-        // return $cari;
 
         return view('search',['cari'=>$cari, 'allmess'=>$result, 'pages'=>$result->lastPage(), 'idx'=>$per, 'start'=>$result->currentPage()-1]);
     }
