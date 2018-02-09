@@ -113,5 +113,7 @@
     </section>
     <!-- /.content -->
   </div>
+<script>
 
+</script>
 @endsection

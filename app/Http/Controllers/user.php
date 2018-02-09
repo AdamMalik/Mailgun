@@ -110,27 +110,46 @@ class user extends Controller
 
     public function readMail(Request $req, $id){
         $pesan;
+        $next;
+        $previous;
+        function findNextOrPrevious($field,$id,$sym){
+            $sort = 'desc';
+            if($sym == '>'){
+                $sort = 'asc';
+            }
+            return Message::where('id',$sym,$id)
+                ->where($field,Auth::user()->email)
+                ->where('role',0)
+                ->select('id')
+                ->orderBy('id',$sort)
+                ->first();
+        }
+        // belum
+        function getMessage($id,$role,$field){
+            return Message::where('id',$id)
+                    ->where($field,Auth::user()->email)
+                    ->where('role',$role)
+                    ->get();;
+        }
         if(explode('/',Route::current()->uri)[0] == 'read-mail'){
-            $pesan = Message::where('id',$id)
-                    ->where('to_user',Auth::user()->email)
-                    ->where('role',0)
-                    ->get();
+            $pesan = getMessage($id,0,'to_user');
             if($pesan[0]->read == 0){
                 Message::where('id', $id)->update(['read' => 1]);
             }
+            $previous = findNextOrPrevious('to_user',$id,'<');
+            $next = findNextOrPrevious('to_user',$id,'>');
         } else if(explode('/',Route::current()->uri)[0] == 'read-draft'){ 
-            $pesan = Message::where('id',$id)
-                    ->where('from_user',Auth::user()->email)
-                    ->where('role',1)
-                    ->get();
+            $pesan = getMessage($id,1,'from_user');
             return view('compose',['pesan'=>$pesan]);
         } else {
-            $pesan = Message::where('id',$id)
-                    ->where('from_user',Auth::user()->email)
-                    ->where('role',0)
-                    ->get();
+            $pesan = getMessage($id,0,'from_user');
+            $previous = findNextOrPrevious('from_user',$id,'<');
+            $next = findNextOrPrevious('from_user',$id,'>');
         }
-        return view('read',['pesan'=>$pesan]);
+        $next = $next == null? $pesan[0]->id:$next->id;
+        $previous = $previous == null? $pesan[0]->id:$previous->id;
+        
+        return view('read',['pesan'=>$pesan, 'next'=> $next,'previous'=>$previous]);
     }
     
     public function getSent(Request $req, $page){

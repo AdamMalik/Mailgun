@@ -25,8 +25,21 @@
               <!-- <h3 class="box-title">Read Mail</h3> -->
 
               <div class="box-tools pull-right">
-                <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="Previous"><i class="fa fa-chevron-left"></i></a>
-                <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="Next"><i class="fa fa-chevron-right"></i></a>
+                @if(explode('/',Route::current()->uri)[0] == 'read-mail')
+                  @if($pesan[0]->id != $next)
+                  <a href="/read-mail/{{$next}}" class="btn btn-box-tool" data-toggle="tooltip" title="Next"><i class="fa fa-chevron-left"></i></a>
+                  @endif
+                  @if($pesan[0]->id != $previous)
+                  <a href="/read-mail/{{$previous}}" class="btn btn-box-tool" data-toggle="tooltip" title="Previous"><i class="fa fa-chevron-right"></i></a>
+                  @endif
+                @else
+                  @if($pesan[0]->id != $next)
+                  <a href="/read-sent/{{$next}}" class="btn btn-box-tool" data-toggle="tooltip" title="Next"><i class="fa fa-chevron-left"></i></a>
+                  @endif
+                  @if($pesan[0]->id != $previous)
+                  <a href="/read-sent/{{$previous}}" class="btn btn-box-tool" data-toggle="tooltip" title="Previous"><i class="fa fa-chevron-right"></i></a>
+                  @endif
+                @endif
               </div>
             </div>
             <!-- /.box-header -->

@@ -106,6 +106,7 @@
     <!-- /.content -->
   </div>
   <script>
+  var terkirim = false;
   $(document).on('submit','#compose', function(event) {
     // return false;
     event.preventDefault();
@@ -134,25 +135,10 @@
           $this.html('send');
           console.log(data.success, loader);
           if(data.success){
+            terkirim = true;
             toastr.success('Pesan berhasil dikirim')
-            // $('.myerror').html(`
-            //   <div class="alert alert-success alert-dismissible">
-            //     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            //     <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
-            //     Pesan berhasil dikirim !
-            //   </div>
-            // `);
-            // $('#modal-default').modal('toggle');
           } else {
             toastr.error('Pesan gagal dikirim !')
-            // $('.myerror').html(`
-            //   <div class="alert alert-danger alert-dismissible">
-            //     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            //     <h4><i class="icon fa fa-ban"></i> Gagal!</h4>
-            //     Pesan gagal dikirim !
-            //   </div>
-            // `);
-            // $('#modal-default').modal('toggle');
           }
 
           $('#compose-textarea').val('')
@@ -172,7 +158,32 @@
     // console.log($('#drMail').val())
     return true;
   });
-
-
+  
+  @if(explode('/',Route::current()->uri)[0] != 'read-draft')
+    $(window).bind('beforeunload',function() {
+      var data = $("#compose").serialize();
+      if(!terkirim && ($('#subject').val() != "" || $('#to').val() != "" || $('#compose-textarea').val() != "") ){
+        $.ajax({
+          headers : {
+            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+          },
+          url: '/draft',
+          type: 'POST',
+          dataType: 'json',
+          data: data,
+          success: function (data) {
+              if(data.success){
+                terkirim = true;
+                toastr.success('Pesan berhasil dikirim')
+              } else {
+                toastr.error('Pesan gagal dikirim !')
+              }
+          },
+          async : false
+        });
+      }
+    });
+  @endif
+  
   </script>
 @endsection
