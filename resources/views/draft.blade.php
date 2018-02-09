@@ -44,18 +44,21 @@
                 <!-- /.btn-group -->
                 <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
                 <!-- /.pull-right -->
+                <button type="button" id="trash" disabled style="margin-left:50px" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
               </div>
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped">
                   <thead>
                     <th>#</th>
+                    <th>No</th>
                     <th>&nbsp;</th>
-                    <th>To</th>
-                    <th>Subject</th>
+                    <th>to</th>
+                    <th>subject</th>
                   </thead>
                   <tbody>
                   @foreach($allmess as $item)
                     <tr>
+                      <td><input type="checkbox" value="{{$item->id}}" class="chebox"></td>
                       <td style="width:10px">{{++$idx}}</td>
                       <td class="mailbox-star">&nbsp;&nbsp;&nbsp;&nbsp;</td>
                       <td class="mailbox-name"><a href="/read-draft/{{$item->id}}">{{$item->to_user}}</a></td>
@@ -104,5 +107,5 @@
     </section>
     <!-- /.content -->
   </div>
-
+<script src="{{asset('js/checkboxnya.js')}}"></script>
 @endsection

@@ -42,6 +42,8 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::get('/register','user@index');
 	Route::match(['get','post'],'/compose/{email?}','user@compose');
 	Route::post('/draft','user@postDraft');
+	Route::post('/del','user@del');
+	Route::post('/readed','user@read');
 });
 Route::group(['middleware' => ['admin','auth']], function(){
 	Route::get('/user/{page}','admin@user');

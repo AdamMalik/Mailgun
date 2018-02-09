@@ -200,4 +200,22 @@ class user extends Controller
             return Redirect::to('/mail/1');
         }
     }
+
+    public function del(Request $req){
+        $data = $req->all();
+        $data = $data['arrayId'];
+        for($i=0;$i<count($data);$i++){
+            Message::where('id', $data[$i])->delete();
+        }
+        return response()->json([ 'success' => true, 'id'=>$data ]);       
+    }
+
+    public function readed(Request $req){
+        $data = $req->all();
+        $data = $data['arrayId'];
+        for($i=0;$i<count($data);$i++){
+            Message::where('id', $data[$i])->update(['read' => 1]);
+        }
+        return response()->json([ 'success' => true, 'id'=>$data ]);
+    }
 }

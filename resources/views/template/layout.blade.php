@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="{{asset('adminlte/dist/css/skins/_all-skins.min.css')}}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{asset('adminlte/plugins/iCheck/flat/blue.css')}}">
+
   <link rel="stylesheet" href="{{asset('adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,7 +32,20 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="{{asset('toast/toastr.css')}}">
+  
+
   <script src="{{asset('adminlte/bower_components/jquery/dist/jquery.min.js')}}"></script>
+  <script src="{{asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+  <!-- Slimscroll -->
+  <script src="{{asset('adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
+  <!-- FastClick -->
+  <script src="{{asset('adminlte/bower_components/fastclick/lib/fastclick.js')}}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{asset('adminlte/dist/js/adminlte.min.js')}}"></script>
+  <!-- iCheck -->
+  <script src="{{asset('adminlte/plugins/iCheck/icheck.min.js')}}"></script>
+  <!-- Page Script -->
+  <script src="{{asset('adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
   <script src="{{asset('toast/toastr.js')}}"></script>
   <script>
     $(document).ready(function() {
@@ -223,17 +237,7 @@
 
 <!-- jQuery 3 -->
 <!-- Bootstrap 3.3.7 -->
-<script src="{{asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-<!-- Slimscroll -->
-<script src="{{asset('adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
-<!-- FastClick -->
-<script src="{{asset('adminlte/bower_components/fastclick/lib/fastclick.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('adminlte/dist/js/adminlte.min.js')}}"></script>
-<!-- iCheck -->
-<script src="{{asset('adminlte/plugins/iCheck/icheck.min.js')}}"></script>
-<!-- Page Script -->
-<script src="{{asset('adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
+
 <script>
   $(function () {
     //Add text editor
