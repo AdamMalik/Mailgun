@@ -60,6 +60,7 @@
                     {{csrf_field()}}
                     <button type="submit" class="btn btn-primary" id="send" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending your messagae"><i class="fa fa-envelope-o"></i> Send</button>
                 </div>
+                <a href="/delete-draft/{{$pesan[0]->id}}" onclick="return confirm('Are you sure?')" class="btn btn-default"><i class="fa fa-trash"></i> Delete Draft</a>
                 <button type="reset" class="btn btn-default">Clear</button>
               </div>
               <!-- /.box-footer -->
@@ -163,6 +164,14 @@
     })
     return false;
   })
+
+  $('#draft').submit(function(event) {
+    $('#drSubject').val($('#subject').val());
+    $('#drTo').val($('#to').val());
+    $('#drMail').val($('#compose-textarea').val());  
+    // console.log($('#drMail').val())
+    return true;
+  });
 
 
   </script>

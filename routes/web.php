@@ -32,12 +32,13 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::get('/read-mail/{id}','user@readMail');
 	Route::get('/read-sent/{id}','user@readMail');
 	Route::get('/read-draft/{id}','user@readMail');
-	Route::get('/compose-draft/{id}','user@composeDraft');
 	Route::get('/sent/{page}','user@getSent');
 	Route::get('/search-sent/{cari?}/{page?}','user@search');
 	Route::get('/search-draft/{cari?}/{page?}','user@search');
 	Route::get('/search-mail/{cari?}/{page?}','user@search');
 	Route::get('/delete-message/{id}','user@deleteMessage');
+	Route::get('/delete-draft/{id}','user@deleteMessage');
+	Route::get('/delete-sent/{id}','user@deleteMessage');
 	Route::get('/register','user@index');
 	Route::match(['get','post'],'/compose/{email?}','user@compose');
 	Route::post('/draft','user@postDraft');

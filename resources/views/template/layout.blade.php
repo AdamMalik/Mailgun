@@ -234,8 +234,6 @@
 <!-- Page Script -->
 <script src="{{asset('adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
 <script>
-  $(document).ready(function() {
-  });
   $(function () {
     //Add text editor
     $("#compose-textarea").wysihtml5();
@@ -249,13 +247,6 @@
     $('#edEmail').val($(this).parent().parent().children()[2].innerHTML)
     $('.modal-title').html('Edit user '+$(this).parent().parent().children()[1].innerHTML)
     // console.log($(this).parent().parent().children()[0].innerHTML);
-  });
-  $('#draft').submit(function(event) {
-    $('#drSubject').val($('#subject').val());
-    $('#drTo').val($('#to').val());
-    $('#drMail').val($('#compose-textarea').val());  
-    // console.log($('#drMail').val())
-    return true;
   });
 </script>
 <!-- AdminLTE for demo purposes -->

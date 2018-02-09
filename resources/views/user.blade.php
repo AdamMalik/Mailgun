@@ -312,21 +312,5 @@
     // return false;
   })
   });
-
-    // .done(function() {
-    //   console.log("success");
-    // })
-    // .fail(function() {
-    //   console.log("error");
-    // })
-    // .always(function() {
-    //   console.log("complete");
-    // });
-    
-    // $('#drSubject').val($('#subject').val());
-    // $('#drTo').val($('#to').val());
-    // $('#drMail').val($('#compose-textarea').val());  
-    // // console.log($('#drMail').val())
-    // return true;
 </script>
 @endsection

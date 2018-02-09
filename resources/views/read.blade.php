@@ -50,16 +50,14 @@
             <!-- /.box-body -->
             <!-- /.box-footer -->
             <div class="box-footer">
-              @if(explode('/',Route::current()->uri)[0] == 'read-draft')
-                <div class="pull-right">
-                  <a href="/compose-draft/{{$pesan[0]->id}}" type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Compose</a>
-                </div>
-              @else
               <div class="pull-right">
                 <a href="/compose/{{$pesan[0]->from_user}}" class="btn btn-default"><i class="fa fa-reply"></i> Reply</a>
                 <a href="/forward/{{$pesan[0]->id}}" class="btn btn-default"><i class="fa fa-share"></i> Forward</a>
               </div>
-              <a href="/delete-message/{{$pesan[0]->id}}" class="btn btn-default"><i class="fa fa-trash"></i> Delete</a>
+              @if(explode('/',Route::current()->uri)[0] == 'read-sent')
+              <a href="/delete-sent/{{$pesan[0]->id}}" onclick="return confirm('Are you sure?')" class="btn btn-default"><i class="fa fa-trash"></i> Delete</a>
+              @else
+              <a href="/delete-message/{{$pesan[0]->id}}" onclick="return confirm('Are you sure?')" class="btn btn-default"><i class="fa fa-trash"></i> Delete</a>
               @endif
             </div>
             <!-- /.box-footer -->

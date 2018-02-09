@@ -66,11 +66,6 @@ class user extends Controller
             $mgClient = new Mailgun(env('MAILGUN_SECRET'));
             $domain = env('MAIL_USERNAME');
 
-            // $mgClient = new Mailgun('key-046c54e5e94d3321ae8cf782c59a9a2d');
-            // $domain = "sandbox250e357b99964061ad3c3e50b8877328.mailgun.org";
-
-            # Make the call to the client.
-            // return $sent;
             $result = $mgClient->sendMessage("$domain", array(
                 'from'    => Auth::user()->email,
                 'to'      => $data['to'],
@@ -147,24 +142,15 @@ class user extends Controller
         $per = $page > 1? ($page * 15) - 15 : 0;
         return view('sent',['allmess'=>$allmess, 'pages'=>$allmess->lastPage(), 'idx'=>$per, 'start'=>$allmess->currentPage()-1]);
     }
-
-    public function composeDraft(Request $req, $id){
-        $pesan = Message::where('id',$id)
-                        ->where('role',1)
-                        ->where('from_user',Auth::user()->email)
-                        ->get();
-
-        return view('/draft/1',['pesan'=>$pesan]);   
-    }
     
     public function postDraft(Request $req){
         $data = $req->all();
         
         $pesan = new Message();
         $pesan->from_user = Auth::user()->email;
-        $pesan->to_user = $data['to'];
-        $pesan->subject = $data['subject'];
-        $pesan->message = $data['mail'];
+        $pesan->to_user = $data['to'] == null ? "null":$data['to'];
+        $pesan->subject = $data['subject'] == null ? "null":$data['subject'];
+        $pesan->message = $data['mail'] == null ? "null":$data['mail'];
         $pesan->role = 1;
         $pesan->save();    
 
@@ -183,6 +169,12 @@ class user extends Controller
 
     public function deleteMessage(Request $req, $id){
         Message::where('id', $id)->delete();
-        return Redirect::to('/mail/1');
+        if(explode('/',Route::current()->uri)[0] == 'delete-draft'){
+            return Redirect::to('/draft/1');
+        } else if(explode('/',Route::current()->uri)[0] == 'delete-sent'){
+            return Redirect::to('/sent/1');
+        } else {
+            return Redirect::to('/mail/1');
+        }
     }
 }
