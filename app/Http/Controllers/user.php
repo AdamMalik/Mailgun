@@ -81,6 +81,10 @@ class user extends Controller
                 $pesan->message = $data['mail'];
                 $pesan->role = 0;
                 $pesan->save();
+
+                if($data['id'] != null){
+                    Message::where('id',$data['id'])->delete();
+                }
                 return response()->json([ 'success' => true ]);
             } else {
                 return response()->json([ 'success' => false ]);

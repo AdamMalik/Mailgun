@@ -46,6 +46,7 @@
                 </div>
                 <div class="form-group">
                   <input class="form-control" name="subject" placeholder="Subject:" id="subject" value="{{$pesan[0]->subject}}">
+                  <input class="form-control" name="id" type="hidden" value="{{$pesan[0]->id}}">
                 </div>
                 <div class="form-group">
                       <textarea id="compose-textarea" name="mail" class="form-control" style="height: 300px">
@@ -77,6 +78,7 @@
                 </div>
                 <div class="form-group">
                   <input class="form-control" name="subject" placeholder="Subject:" id="subject">
+                  <input class="form-control" name="id" type="hidden">
                 </div>
                 <div class="form-group">
                       <textarea id="compose-textarea" name="mail" class="form-control" style="height: 300px"></textarea>
@@ -160,7 +162,7 @@
   });
   
   @if(explode('/',Route::current()->uri)[0] != 'read-draft')
-    $(window).bind('beforeunload',function() {
+    $(window).on('beforeunload',function() {
       var data = $("#compose").serialize();
       if(!terkirim && ($('#subject').val() != "" || $('#to').val() != "" || $('#compose-textarea').val() != "") ){
         $.ajax({
