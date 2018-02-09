@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Document</title>
+		<title>Login</title>
 		<link rel="stylesheet" href="{{asset('adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
 	  <!-- Font Awesome -->
 	  <link rel="stylesheet" href="{{asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css')}}">
@@ -33,7 +33,7 @@
 	  <div class="row" style="margin-top:20px">
 	  	
 		<div class="col-sm-4 col-sm-push-4" style="background-color:#fff;">
-			<h2>MAILGUN</h2>
+			<h2>INGOmail</h2>
 			<form class="form-horizontal" action="/login" method="post">
           {{csrf_field()}}
           <div class="box-body">

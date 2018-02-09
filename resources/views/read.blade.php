@@ -51,11 +51,10 @@
                 </div>
               @else
               <div class="pull-right">
-                <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
-                <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
+                <a href="/compose/{{$pesan[0]->from_user}}" class="btn btn-default"><i class="fa fa-reply"></i> Reply</a>
+                <a href="/forward/{{$pesan[0]->id}}" class="btn btn-default"><i class="fa fa-share"></i> Forward</a>
               </div>
-              <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
-              <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
+              <a href="/delete-message/{{$pesan[0]->id}}" class="btn btn-default"><i class="fa fa-trash"></i> Delete</a>
               @endif
             </div>
             <!-- /.box-footer -->

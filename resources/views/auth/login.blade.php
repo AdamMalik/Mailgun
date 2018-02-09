@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Document</title>
+        <title>Ingo Login</title>
         <link rel="stylesheet" href="{{asset('adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
       <!-- Font Awesome -->
       <link rel="stylesheet" href="{{asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css')}}">
@@ -16,24 +16,44 @@
       <!-- iCheck -->
       <link rel="stylesheet" href="{{asset('adminlte/plugins/iCheck/flat/blue.css')}}">
       <link rel="stylesheet" href="{{asset('adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
+      <link rel="stylesheet" href="{{asset('toast/toastr.css')}}">
+      <script src="{{asset('adminlte/bower_components/jquery/dist/jquery.min.js')}}"></script>
+      <script src="{{asset('toast/toastr.js')}}"></script>
+      <script>
+        $(document).ready(function() {
+          toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          }
+        });
+      </script>
     </head>
     <body style="background-color:#ddd">
         <div class="row">
             
             @if ( $errors->has('email') || $errors->has('password') )
-            <div class="col-sm-6 col-sm-push-3" style="margin-top:20px">
-              <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i> Gagal!</h4>
-                {{$errors->has('email') ? $errors->first('email') : $errors->first('password') }}
-              </div>
-            </div>
+            <script>
+              toastr.error("{{$errors->has('email') ? $errors->first('email') : $errors->first('password') }}")
+            </script>
             @endif
         </div>
-        <div class="row" style="margin-top:20px">
+        <div class="row" style="margin-top:50px">
           <div class="head col-sm-4 col-sm-push-4" style="background-color:#00acd6; text-align:center; color:#fff; padding:5px 0">
-            <span style="font-weight:bolder;font-size:40px">Mail</span> 
-            <span style="font-weight:lighter;font-size:40px;color:#f0f0f0">gun </span>
+            <span style="font-weight:bolder;font-size:40px">INGO</span> 
+            <span style="font-weight:lighter;font-size:40px;color:#f0f0f0">mail </span>
             <i class="fa fa-lock" style="font-size:40px"></i>
           </div>
         </div>

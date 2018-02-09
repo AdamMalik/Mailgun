@@ -8,57 +8,66 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use app\User;
+
 
 class admin extends Controller
 {
     public function User(Request $req, $page){
-        
-        $value = $req->session()->get('error','null');
-        $error = $value;
-        // $alluser = DB::table('users')->get();
-        
-        $all = DB::table('users')->get();
-        $total = count($all);
+        $alluser = User::orderBy('id','asc')
+                    ->paginate(15,['id','name','email'],'page',$page);
+        $per = $page > 1? ($page * 15) - 15 : 0;
 
-        $per = $page > 1? ($page * 5) - 5 : 0;
-        $alluser = DB::table('users')
-                    ->offset($per)
-                    ->limit(5)
-                    ->get();
-        $pages = ceil($total/5);
-        // return $pages;
-        // return $alluser;
-        $admin = $req->session()->get('admin','null');
-        $start = $per/5;
-        // return $start/5;
-    	return view('user',['error'=>$error, 'alluser'=>$alluser,'idx'=>$per, 'admin'=>$admin, 'start'=>$start, 'pages'=>$pages]);
+    	return view('user',['alluser'=>$alluser,'idx'=>$per, 'start'=>$alluser->currentPage()-1, 'pages'=>$alluser->lastPage()]);
     }
     public function deleteUser(Request $req, $id){    
-    	DB::table('users')->where('id', '=', $id)->delete();
-        return Redirect::to('/user/1');
+        User::where('id', $id)->delete();
+        return response()->json([ 'success' => true ]);
     }
     public function editUser(Request $req){
+        $v = $req->validate([
+            'name' => 'required|string',
+            'mail' => 'required|string|email',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+        
         $data = $req->all();
-        // return $data;
-        DB::table('users')
-            ->where('email', $data['mail'])
-            ->update(['name' => $data['name'], 'password'=>bcrypt($data['password'])]);
-        return Redirect::to('/user/1');
+
+        
+        $user = User::where('email', $data['mail'])->get();
+
+        if(Hash::check($data['password'], $user[0]->password)){
+            return response()->json([ 'success' => false ]);
+        } else {
+            User::where('email', $data['mail'])
+                ->update(['password'=>bcrypt($data['password'])]);
+            
+            return response()->json([ 'success' => true ]);
+        }
+
     }
     
     public function add(Request $req){
-        $data = $req->all(); 
-        
-        $cek = DB::table('users')->where('email','=',$data['email'])->get();
+        // return $req;
+        $v = $req->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
 
+        $data = $req->all(); 
+        $cek = User::where('email', $data['email'])->get();
+        // return $cek;
         if(count($cek)>0){
-            $req->session()->flash('error', 'true');
+            return response()->json([ 'success' => false ]);
         } else {
-        	DB::table('users')->insert(
-    		    ['name'=>$data['name'], 'email' => $data['email'], 'password' => bcrypt($data['password']) ]
-    		);
-            $req->session()->flash('error', 'false');
+            $user = new User();
+            $user->name  = $data['name'];
+            $user->email = $data['email'];
+            $user->password = bcrypt($data['password']);
+            $user->save();
+            return response()->json([ 'success' => true, 'total'=>count(User::all()), 'id'=>$user->id ]);
         }
-    	return Redirect::to('/user/1');
     }
 }

@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Mailbox</title>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>INGO mail</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -29,6 +30,30 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="{{asset('toast/toastr.css')}}">
+  <script src="{{asset('adminlte/bower_components/jquery/dist/jquery.min.js')}}"></script>
+  <script src="{{asset('toast/toastr.js')}}"></script>
+  <script>
+    $(document).ready(function() {
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
+    });
+  </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper" style="overflow:hidden">
@@ -37,9 +62,9 @@
     <!-- Logo -->
     <a href="#!" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>M</b>GN</span>
+      <span class="logo-mini"><b>I</b>ML</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Mail</b>gun</span>
+      <span class="logo-lg"><b>INGO</b>mail</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -107,7 +132,7 @@
           <img src="{{asset('adminlte/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>{{ Auth::user()->email }}</p>
+          <p>{{ Auth::user()->name }}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -130,7 +155,7 @@
         </div>
         <!-- <li style="text-align:center !important"> -->
         <!-- </li> -->
-        @if(explode("/",Route::current()->uri)[0] == 'mail')
+        @if(explode("/",Route::current()->uri)[0] == 'mail' || explode("/",Route::current()->uri)[0] == 'search-mail')
           <li class="active">
         @else
           <li class="">
@@ -140,7 +165,7 @@
             <!-- <span class="label label-primary pull-right">unread 12</span> -->
           </a>
         </li>
-        @if(explode("/",Route::current()->uri)[0] == 'draft')
+        @if(explode("/",Route::current()->uri)[0] == 'draft' || explode("/",Route::current()->uri)[0] == 'search-draft')
           <li class="active">
         @else
           <li class="">
@@ -150,7 +175,7 @@
             <span>Draft</span>
           </a>
         </li>
-        @if(explode("/",Route::current()->uri)[0] == 'sent')
+        @if(explode("/",Route::current()->uri)[0] == 'sent' || explode("/",Route::current()->uri)[0] == 'search-sent')
           <li class="active">
         @else
           <li class="">
@@ -196,7 +221,6 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
-<script src="{{asset('adminlte/bower_components/jquery/dist/jquery.min.js')}}"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- Slimscroll -->
@@ -210,16 +234,19 @@
 <!-- Page Script -->
 <script src="{{asset('adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
 <script>
+  $(document).ready(function() {
+  });
   $(function () {
     //Add text editor
     $("#compose-textarea").wysihtml5();
   });
-  $('.edit').click(function(event) {
+  $(document).on('click', '.edit', function(event) {
+    event.preventDefault();
+    /* Act on the event */
     $('#editName').val($(this).parent().parent().children()[1].innerHTML)
     $('#editNam').val($(this).parent().parent().children()[1].innerHTML)
     $('#editEmail').val($(this).parent().parent().children()[2].innerHTML)
     $('#edEmail').val($(this).parent().parent().children()[2].innerHTML)
-    $('#editPassword').val($(this).parent().parent().children()[3].innerHTML)
     $('.modal-title').html('Edit user '+$(this).parent().parent().children()[1].innerHTML)
     // console.log($(this).parent().parent().children()[0].innerHTML);
   });

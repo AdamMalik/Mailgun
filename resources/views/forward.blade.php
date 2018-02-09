@@ -5,12 +5,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Compose
+        Forward
         <!-- <small>13 new messages</small> -->
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Compose</li>
+        <li class="active">Forward</li>
       </ol>
     </section>
 
@@ -23,8 +23,7 @@
         <div class="col-md-12">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Compose New Message</h3>
-              @if(explode('/',Route::current()->uri)[0] != 'read-draft')
+              <h3 class="box-title">Forward Message</h3>
               <form action="/draft" method="post" class="pull-right" id="draft">
                 {{csrf_field()}}
                 <input type="hidden" name="to" id="drTo">
@@ -35,66 +34,40 @@
                   draft
                 </button>
               </form>
-              @endif
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-            @if(explode('/',Route::current()->uri)[0] == 'read-draft')
-              <form action="/compose" method="post">
-                <div class="form-group">
-                  <input class="form-control" name="to" placeholder="To:" id="to" value="{{$pesan[0]->to_user}}">
-                </div>
-                <div class="form-group">
-                  <input class="form-control" name="subject" placeholder="Subject:" id="subject" value="{{$pesan[0]->subject}}">
-                </div>
-                <div class="form-group">
-                      <textarea id="compose-textarea" name="mail" class="form-control" style="height: 300px">
-                        {{$pesan[0]->message}}
-                      </textarea>
-                </div>
+            <form action="/compose" id="compose" method="post">
+              <div class="form-group">
+                <input class="form-control" name="to" placeholder="To:" id="to">
               </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <div class="pull-right">
-                  <!-- <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Draft</button> -->
-                    {{csrf_field()}}
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
-                </div>
-                <button type="reset" class="btn btn-default">Clear</button>
+              <div class="form-group">
+                <input class="form-control" name="subject" placeholder="Subject:" id="subject">
               </div>
-              <!-- /.box-footer -->
+              <div class="form-group">
+                    <textarea id="compose-textarea" name="mail" class="form-control" style="height: 300px">
+<pre>---------Pesan terusan---------
+From : {{$pesan->from_user}}
+To : {{$pesan->to_user}}
+Subject : {{$pesan->subject}}
+pesan : 
+</pre>
+{!! $pesan->message !!}
+                    </textarea>
+              </div>
             </div>
-            </form>
-            @else
-              <form action="/compose" id="compose" method="post">
-                <div class="form-group">
-                  @if($email != null)
-                  <input class="form-control" value="{{$email}}" name="to" placeholder="To:" id="to">
-                  @else
-                  <input class="form-control" name="to" placeholder="To:" id="to">
-                  @endif
-                </div>
-                <div class="form-group">
-                  <input class="form-control" name="subject" placeholder="Subject:" id="subject">
-                </div>
-                <div class="form-group">
-                      <textarea id="compose-textarea" name="mail" class="form-control" style="height: 300px"></textarea>
-                </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <div class="pull-right">
+                <!-- <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Draft</button> -->
+                  {{csrf_field()}}
+                  <button type="submit" class="btn btn-primary" id="send" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending your messagae"><i class="fa fa-envelope-o"></i> Send</button>
               </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <div class="pull-right">
-                  <!-- <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Draft</button> -->
-                    {{csrf_field()}}
-                    <button type="submit" class="btn btn-primary" id="send" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending your messagae"><i class="fa fa-envelope-o"></i> Send</button>
-                </div>
-                <button type="reset" class="btn btn-default">Clear</button>
-              </div>
-              <!-- /.box-footer -->
+              <button type="reset" class="btn btn-default">Clear</button>
             </div>
-            </form>
-            
-            @endif
+            <!-- /.box-footer -->
+          </div>
+          </form>
           <!-- /. box -->
           <!-- /. box -->
         </div>

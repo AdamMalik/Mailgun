@@ -25,8 +25,11 @@
 
               <div class="box-tools pull-right">
                 <div class="has-feedback">
-                  <input type="text" class="form-control input-sm" placeholder="Search Mail">
-                  <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                  <form action="/search-mail">
+                    <input type="text" name="search" class="form-control input-sm" placeholder="Search Mail">
+                    <input type="submit" hidden>
+                    {{csrf_field()}}
+                  </form>
                 </div>
               </div>
               <!-- /.box-tools -->
